@@ -29,7 +29,7 @@ pipeline {
     }
     stage('输出 Endpoint') {
       steps {
-        sh 'cat log.log | grep apigw.tencentcs.com'
+        sh 'cd serverless && cat log.log | grep apigw.tencentcs.com'
       }
     }
   }
