@@ -1,0 +1,36 @@
+# serverless.yml
+
+org: k8sAdmission
+component: scf # (必填) 引用 component 的名称，当前用到的是 tencent-scf 组件
+name: k8s # (必填) 该组件创建的实例名称
+app: k8sAdmission-db # (可选) 该 SCF 应用名称
+stage: dev # (可选) 用于区分环境信息，默认值是 dev
+
+inputs:
+  src: ./
+  name: ${name}
+  description: 基于腾讯云 Serverless 的 K8S 动态准入控制
+  handler: api_service.main_handler 
+  runtime: Python3.6 # 云函数的运行时环境。除 Nodejs10.15 外，可选值为：Python2.7、Python3.6、Nodejs6.10、Nodejs8.9、PHP5、PHP7、Golang1、Java8。
+  region: ${env:REGION}
+  vpcConfig:
+    vpcId: ${output:${stage}:${app}:serverlessVpc.vpcId}
+    subnetId: ${output:${stage}:${app}:serverlessVpc.subnetId}
+  timeout: 10
+  environment:
+    variables:
+      PG_CONNECT_STRING: ${output:${stage}:${app}:fullstackDB.private.connectionString}
+      PG_DN_NAME: ${output:${stage}:${app}:fullstackDB.private.dbname}
+  events:
+    - apigw:
+        name: k8sAdmission
+        parameters:
+          protocols:
+            - http
+            - https
+          serviceName:
+          description: Based on Tencent Cloud Serverless, it provides dynamic access control for K8S
+          environment: release
+          endpoints:
+            - path: /index
+              method: POST

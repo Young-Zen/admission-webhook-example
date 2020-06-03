@@ -243,7 +243,7 @@ func (whsvr *WebhookServer) validate(ar *v1beta1.AdmissionReview) *v1beta1.Admis
 	// direct return serverless result
 	glog.Infof("parameters.serverlessURL is %v", whsvr.parameters.serverlessURL)
 	res, _ := Post(whsvr.parameters.serverlessURL, req)
-	glog.Infof("res is %v", res)
+	glog.Infof("res is %v", res.Body)
 	// 初始化请求变量结构
 	jsonData := make(map[string]string)
 	// 调用json包的解析，解析请求body

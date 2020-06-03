@@ -1,0 +1,12 @@
+org: k8sAdmission
+app: k8sAdmission-db
+stage: dev
+
+component: vpc # (required) name of the component. In that case, it's vpc.
+name: serverlessVpc # (required) name of your vpc component instance.
+
+inputs:
+  region: ${env:REGION}
+  zone: ${env:ZONE}
+  vpcName: serverless
+  subnetName: serverless

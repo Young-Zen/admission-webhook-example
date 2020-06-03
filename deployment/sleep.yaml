@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: sleep
   annotations:
-    token: "1234"
+    token: "1122"
 spec:
   replicas: 3
   selector:
