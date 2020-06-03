@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
         - name: admission-webhook-example
-          image: wangweicoding-docker.pkg.coding.net/cd-production/cd/admission-webhook:v11
+          image: wangweicoding-docker.pkg.coding.net/cd-production/cd/admission-webhook:v12
           imagePullPolicy: Always
           args:
             - -tlsCertFile=/etc/webhook/certs/cert.pem
             - -tlsKeyFile=/etc/webhook/certs/key.pem
-            - -serverlessURL=https://service-mewy1m02-1301578102.gz.apigw.tencentcs.com/release/python
+            - -serverlessURL=https://service-faeax9cy-1301578102.gz.apigw.tencentcs.com/release/index
             - -alsologtostderr
             - -v=4
             - 2>&1

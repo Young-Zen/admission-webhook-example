@@ -48,6 +48,8 @@ def main_handler(event,content):
         conn.commit()
 
     json_dict = json.loads(event["body"])
+    if json_dict["object"]["metadata"]["annotations"]["token"] == "":
+        return {"errorCode":0,"errorMsg":"","allow":"false"}
     cur.execute("SELECT * FROM TOKENS where tokens=%s",[json_dict["object"]["metadata"]["annotations"]["token"]])
     myresult = cur.fetchall()
     allow = "false"
