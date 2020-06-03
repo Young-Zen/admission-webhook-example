@@ -27,5 +27,10 @@ pipeline {
         echo '部署完成'
       }
     }
+    stage('输出 Endpoint') {
+      steps {
+        sh 'cat log.log | grep apigw.tencentcs.com'
+      }
+    }
   }
 }
