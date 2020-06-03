@@ -12,6 +12,11 @@ pipeline {
         ]]])
       }
     }
+    stage('升级 Serverless SDK') {
+      steps {
+        sh 'npm update -g serverless'
+      }
+    }
     stage('部署 Serverless 服务') {
       steps {
         withCredentials([string(credentialsId:"3bbd3a13-48fc-499d-8d2d-c51a098ec9bc", variable:'tencent_serverless')]) {
