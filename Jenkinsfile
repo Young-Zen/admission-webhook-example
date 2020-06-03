@@ -19,7 +19,7 @@ pipeline {
     }
     stage('部署 Serverless 服务') {
       steps {
-        withCredentials([string(credentialsId:"3bbd3a13-48fc-499d-8d2d-c51a098ec9bc", variable:'tencent_serverless')]) {
+        withCredentials([string(credentialsId:"eb27b683-4dc9-4767-858f-fb7dcb716554", variable:'tencent_serverless')]) {
           sh 'echo "${tencent_serverless}" > .tmp'
           sh '''
             SecretId=$(cat .tmp | jq -r .SecretId)
