@@ -23,10 +23,10 @@ pipeline {
           sh 'cd serverless'
           sh 'echo "${tencent_serverless}" > .tmp'
           sh '''
-            SecretId=cat .tmp | jq .SecretId
-            SecretKey=cat .tmp | jq .SecretKey
-            token=cat .tmp | jq .token
-            AppId=cat .tmp | jq .AppId
+            SecretId=$(cat .tmp | jq .SecretId)
+            SecretKey=$(cat .tmp | jq .SecretKey)
+            token=$(cat .tmp | jq .token)
+            AppId=$(cat .tmp | jq .AppId)
             echo "TENCENT_SECRET_ID=${SecretId}" >> .env
             echo "TENCENT_SECRET_KEY=${SecretKey}" >> .env
             echo "TENCENT_APP_ID=${AppId}" >> .env
