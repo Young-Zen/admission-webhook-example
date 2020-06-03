@@ -31,7 +31,6 @@ pipeline {
             echo "TENCENT_APP_ID=${AppId}" >> ./serverless/.env
             echo "TENCENT_TOKEN=${token}" >> ./serverless/.env
              '''
-          sh 'cp .env ./serverless'
           sh 'cd serverless && cat .env'
           sh 'cd serverless && npm run bootstrap && sls deploy --all | tee log.log'
         }
