@@ -33,6 +33,7 @@ pipeline {
             echo "TENCENT_TOKEN=${token}" >> .env
              '''
           sh 'cat .env'
+          sh 'cp .env ./serverless'
           sh 'echo "${tencent_serverless}" | base64'
           sh 'cd serverless && npm run bootstrap && sls deploy --all | tee log.log'
         }
