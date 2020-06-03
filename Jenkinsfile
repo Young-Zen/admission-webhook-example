@@ -21,11 +21,12 @@ pipeline {
       steps {
         withCredentials([string(credentialsId:"3bbd3a13-48fc-499d-8d2d-c51a098ec9bc", variable:'tencent_serverless')]) {
           sh 'cd serverless'
+          sh 'echo "${tencent_serverless}" > .tmp'
           sh '''
-            SecretId=echo "${tencent_serverless}" | jq .SecretId
-            SecretKey=echo "${tencent_serverless}" | jq .SecretKey
-            token=echo "${tencent_serverless}" | jq .token
-            AppId=echo "${tencent_serverless}" | jq .AppId
+            SecretId=cat .tmp | jq .SecretId
+            SecretKey=cat .tmp | jq .SecretKey
+            token=cat .tmp | jq .token
+            AppId=cat .tmp | jq .AppId
             echo "TENCENT_SECRET_ID=${SecretId}" >> .env
             echo "TENCENT_SECRET_KEY=${SecretKey}" >> .env
             echo "TENCENT_APP_ID=${AppId}" >> .env
@@ -33,7 +34,7 @@ pipeline {
              '''
           sh 'cat .env'
           sh 'echo "${tencent_serverless}" | base64'
-          sh 'npm run bootstrap && sls deploy --all | tee log.log'
+          sh 'cd serverless && npm run bootstrap && sls deploy --all | tee log.log'
           sh 'rm .env_temp'
         }
         echo '部署完成'
