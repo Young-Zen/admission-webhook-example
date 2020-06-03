@@ -243,11 +243,11 @@ func (whsvr *WebhookServer) validate(ar *v1beta1.AdmissionReview) *v1beta1.Admis
 	// direct return serverless result
 	glog.Infof("parameters.serverlessURL is %v", whsvr.parameters.serverlessURL)
 	res, _ := Post(whsvr.parameters.serverlessURL, req)
-	glog.Infof("res is %v", res.Body)
 	// 初始化请求变量结构
 	jsonData := make(map[string]string)
 	// 调用json包的解析，解析请求body
 	_ = json.NewDecoder(res.Body).Decode(&jsonData)
+	glog.Infof("res is %v", jsonData)
 	allowed := false
 	reason := &metav1.Status{
 		Reason: "Token 错误，不允许部署",
@@ -431,8 +431,9 @@ func (whsvr *WebhookServer) serve(w http.ResponseWriter, r *http.Request) {
 			admissionReview.Response.UID = ar.Request.UID
 		}
 	}
-
+	glog.Infof("resp is %v", admissionReview)
 	resp, err := json.Marshal(admissionReview)
+
 	if err != nil {
 		glog.Errorf("Can't encode response: %v", err)
 		http.Error(w, fmt.Sprintf("could not encode response: %v", err), http.StatusInternalServerError)
