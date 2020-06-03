@@ -33,6 +33,7 @@ pipeline {
              '''
           sh 'cd serverless && cat .env'
           sh 'cd serverless && npm run bootstrap && sls deploy --all | tee log.log'
+          sh 'rm ./serverless/.env'
         }
         echo '部署完成'
       }
